@@ -43,9 +43,6 @@ Follow these steps to set up and run the project:
 2. **Doctors:** View and manage assigned appointments.
 3. **Admins:** Monitor overall system status and user activity.
 
-## 📸 Screenshots (Optional)
-_Add screenshots of the UI here to showcase the system._
-
 ## 🚀 Future Improvements
 - 📍 **Real-time queue updates using WebSockets**
 - 📅 **Integration with Google Calendar for scheduling**
