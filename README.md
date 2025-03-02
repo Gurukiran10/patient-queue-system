@@ -52,12 +52,11 @@ _Add screenshots of the UI here to showcase the system._
 - 📊 **Analytics dashboard for hospital administrators**
 
 ## 👨‍💻 Author
-- **Guru Kiran** – [GitHub Profile](https://github.com/Gurukiran10)
+- **GuruKiran S** – [GitHub Profile](https://github.com/Gurukiran10)
 
 ## 📜 License
 This project is open-source and available under the **MIT License**.
 
 ---
 Feel free to contribute or report issues! ✨
-
 
