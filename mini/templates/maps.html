@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maps</title>
+    <style>
+        /* Set the size of the map container */
+        #map {
+            height: calc(100vh - 70px); /* Adjusted for the header image height */
+            width: 100%;
+            margin: 0 auto;
+        }
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Times New Roman';
+            background-color: #f5f5f5;
+        }
+        .header-image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 70px; /* Set height for the header image container */
+            background-color: #fff; /* White background color */
+        }
+        .header-image {
+            height: 100%; /* Set the height of the image */
+            object-fit: contain; /* Ensure the image fits within the container */
+        }
+        .mapboxgl-popup-content {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            background-color: #e5f1e0;
+            color: #2d6a4f;
+            border-radius: 4px;
+            padding: 10px;
+        }
+        #locate-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #004d00; /* Dark green background color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        #locate-button:hover {
+            background-color: #003300; /* Darker green on hover */
+        }
+    </style>
+    <!-- Include Mapbox GL JS CSS -->
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
+    <!-- Include Mapbox Directions plugin CSS -->
+    <link href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header image container -->
+    <div class="header-image-container">
+        <img src="/static/images.jpeg" alt="Header Image" class="header-image">
+    </div>
+
+    <!-- Map container -->
+    <div id="map"></div>
+
+    <!-- Button to locate the current user -->
+    <button id="locate-button">Locate Me</button>
+
+    <!-- Include Mapbox GL JS JavaScript -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+    <!-- Include Mapbox Directions plugin JavaScript -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.js"></script>
+    <script>
+        // Set the Mapbox access token
+        mapboxgl.accessToken = 'pk.eyJ1Ijoic2FudG9zaGt1bWFyaGF0dGkiLCJhIjoiY2xqZmJnenM2MDA1czNrbW4wOXljcjF4aSJ9.bC1yKUYykpDMlvxNI-Y3gQ';
+
+        // Initialize the map
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/outdoors-v11',
+            center: [76.9214, 15.1394],
+            zoom: 10
+        });
+
+        // Initialize the Mapbox Directions plugin
+        var directions = new MapboxDirections({
+            accessToken: mapboxgl.accessToken,
+            unit: 'metric',
+            profile: 'mapbox/driving',
+        });
+
+        map.addControl(directions, 'top-left');
+
+        // Hospital data embedded directly in the script
+        var hospitalData = {
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [76.9256, 15.1394]
+                    },
+                    "properties": {
+                        "name": "Vijayanagar Institute of Medical Sciences",
+                        "address": "Cantonment, Bellary, Karnataka",
+                        "timings": "24 Hours"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [76.9130, 15.1422]
+                    },
+                    "properties": {
+                        "name": "Santhosh Hospital",
+                        "address": "Ananthapur Road, Bellary, Karnataka",
+                        "timings": "9:00 AM - 9:00 PM"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [76.9297, 15.1442]
+                    },
+                    "properties": {
+                        "name": "Basaveshwara Hospital",
+                        "address": "Gandhinagar, Bellary, Karnataka",
+                        "timings": "24 Hours"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [76.9176, 15.1416]
+                    },
+                    "properties": {
+                        "name": "City Central Hospital",
+                        "address": "Parvathi Nagar, Bellary, Karnataka",
+                        "timings": "10:00 AM - 8:00 PM"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [76.9362, 15.1425]
+                    },
+                    "properties": {
+                        "name": "KIMS Hospital",
+                        "address": "KHB Colony, Bellary, Karnataka",
+                        "timings": "24 Hours"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [76.9201, 15.1472]
+                    },
+                    "properties": {
+                        "name": "Sri Sai Hospital",
+                        "address": "Hospet Road, Bellary, Karnataka",
+                        "timings": "9:00 AM - 7:00 PM"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [76.9300, 15.1380]
+                    },
+                    "properties": {
+                        "name": "Dhanavanthri Hospital",
+                        "address": "Gandhinagar, Bellary, Karnataka",
+                        "timings": "8:00 AM - 10:00 PM"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [76.9289, 15.1345]
+                    },
+                    "properties": {
+                        "name": "ESI Hospital",
+                        "address": "Bellary, Karnataka",
+                        "timings": "9:00 AM - 4:00 PM"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [76.9213, 15.1334]
+                    },
+                    "properties": {
+                        "name": "Arogyadhama Hospital",
+                        "address": "Ashok Nagar, Bellary, Karnataka",
+                        "timings": "24 Hours"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [76.9144, 15.1372]
+                    },
+                    "properties": {
+                        "name": "Megha Hospital",
+                        "address": "Cowl Bazar, Bellary, Karnataka",
+                        "timings": "10:00 AM - 8:00 PM"
+                    }
+                }
+            ]
+        };
+
+        // Function to add markers from the provided hospital data
+        function addMarkers(hospitalLocations) {
+            hospitalLocations.features.forEach(function(location) {
+                var marker = new mapboxgl.Marker({ 
+                    color: "#4a773c" // Green color for marker
+                })
+                .setLngLat(location.geometry.coordinates)
+                .setPopup(new mapboxgl.Popup().setHTML(`
+                    <strong>${location.properties.name}</strong><br>
+                    ${location.properties.address}<br>
+                    Timings: ${location.properties.timings}
+                `))
+                .addTo(map)
+                .getElement().addEventListener('click', () => {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(
+                            function(position) {
+                                var userCoordinates = [position.coords.longitude, position.coords.latitude];
+                                directions.setOrigin(userCoordinates);
+                                directions.setDestination(location.geometry.coordinates);
+                            }, 
+                            function(error) {
+                                console.error('Error getting location: ', error);
+                                alert('Unable to retrieve your location. Error: ' + error.message);
+                            },
+                            { enableHighAccuracy: true }
+                        );
+                    } else {
+                        alert('Geolocation is not supported by this browser.');
+                    }
+                });
+            });
+        }
+
+        // Call the addMarkers function with the hospital data
+        addMarkers(hospitalData);
+
+        // Function to locate the user's current location
+        function locateUser() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        var userCoordinates = [position.coords.longitude, position.coords.latitude];
+                        map.flyTo({
+                            center: userCoordinates,
+                            zoom: 14
+                        });
+                        // Add a marker at the user's location
+                        new mapboxgl.Marker({ 
+                            color: "#ff0000" // Red color for user marker
+                        })
+                        .setLngLat(userCoordinates)
+                        .setPopup(new mapboxgl.Popup().setHTML("<strong>Your Location</strong>"))
+                        .addTo(map);
+                    }, 
+                    function(error) {
+                        console.error('Error getting location: ', error);
+                        alert('Unable to retrieve your location. Error: ' + error.message);
+                    }
+                );
+            } else {
+                alert('Geolocation is not supported by this browser.');
+            }
+        }
+
+        // Add event listener to the locate button
+        document.getElementById('locate-button').addEventListener('click', locateUser);
+    </script>
+</body>
+</html>

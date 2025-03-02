@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ translations['all_notifications'] }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: #f9f9f9;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .back-link:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ translations['all_notifications'] }}</h1>
+
+    {% if notifications %}
+        <ul>
+            {% for notification in notifications %}
+                <li>{{ notification['message'] }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>{{ translations['no_notifications'] }}</p>
+    {% endif %}
+
+    <a href="{{ url_for('patient_dashboard', lang=request.args.get('lang', 'en')) }}" class="back-link">{{ translations['back_to_dashboard'] }}</a>
+</body>
+</html>

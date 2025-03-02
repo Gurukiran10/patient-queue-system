@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Donation Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa; /* Light gray background */
+        }
+        .navbar {
+            background-color: #dc3545; /* Red navbar */
+            color: #fff;
+            padding: 1em;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+            color: #343a40; /* Dark gray */
+            margin-bottom: 20px;
+        }
+        .form-section {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-section h3 {
+            margin-bottom: 15px;
+            color: #dc3545;
+        }
+        .form-section form {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-section input, 
+        .form-section select, 
+        .form-section button {
+            margin-bottom: 15px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        .form-section button {
+            background-color: #dc3545;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .form-section button:hover {
+            background-color: #b02a37;
+        }
+        .list-section {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .list-section h3 {
+            color: #343a40;
+            margin-bottom: 10px;
+        }
+        .list-item {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+        .list-item h4 {
+            margin-bottom: 5px;
+            color: #dc3545;
+        }
+        .list-item p {
+            margin: 0;
+            color: #6c757d; /* Muted text */
+        }
+        .search-bar {
+            max-width: 600px;
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+        }
+        .search-bar input {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            width: 80%;
+        }
+        .search-bar button {
+            padding: 10px;
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .search-bar button:hover {
+            background-color: #b02a37;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <span>Blood Donation Management</span>
+    </div>
+    <div class="container">
+        <h2>Manage Your Blood Donations</h2>
+
+        <!-- Search bar for filtering by region -->
+        <div class="search-bar">
+            <form action="/blood_donation" method="GET">
+                <input type="text" name="region" value="{{ search_region }}" placeholder="Search by Region" required>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
+        <!-- Section for scheduling blood donations -->
+        <div class="form-section">
+            <h3>Schedule a Blood Donation</h3>
+            <form action="/schedule_donation" method="POST">
+                <input type="text" name="name" placeholder="Your Full Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <select name="blood_group" required>
+                    <option value="">Select Blood Group</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                </select>
+                <input type="date" name="donation_date" required>
+                <input type="text" name="location" placeholder="Preferred Donation Location" required>
+                <input type="text" name="phone" placeholder="Your Phone Number" required>
+                <input type="text" name="region" placeholder="Region" required>
+                <button type="submit">Schedule</button>
+            </form>
+        </div>
+
+        <!-- Section to display donation history -->
+        <div class="list-section">
+            <h3>Your Donation History</h3>
+            {% if history %}
+                {% for donation in history %}
+                <div class="list-item">
+                    <h4>{{ donation['name'] }} - {{ donation['location'] }}</h4>
+                    <p>Phone: {{ donation['phone'] }}</p>
+                    <p>Date: {{ donation['date'] }}</p>
+                    <p>Blood Group: {{ donation['blood_group'] }}</p>
+                    <p>Region: {{ donation['region'] }}</p>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>No donation history found. Schedule your first donation above!</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

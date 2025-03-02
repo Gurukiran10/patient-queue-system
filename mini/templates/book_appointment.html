@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="{{ language }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ translations['book_appointment'] }}</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">{{ translations['book_appointment'] }}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('logout', language=request.args.get('language', 'en')) }}">{{ translations['logout'] }}</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h3>{{ translations['book_appointment'] }}</h3>
+        <form method="POST" action="{{ url_for('book_appointment', language=request.args.get('language', 'en')) }}">
+            <div class="form-group">
+                <label for="doctor">{{ translations['doctor'] }}</label>
+                <select class="form-control" id="doctor" name="doctor" required>
+                    {% for doctor in doctors %}
+                    <option value="{{ doctor.username }}">
+                        {{ doctor.username }} - {{ doctor.branch }} ({{ doctor.available_time }})
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="date">{{ translations['date'] }}</label>
+                <input type="date" class="form-control" id="date" name="date" required>
+            </div>
+            <div class="form-group">
+                <label for="time">{{ translations['time'] }}</label>
+                <input type="time" class="form-control" id="time" name="time" required>
+            </div>
+            <div class="form-group">
+                <label for="patient_email">Email</label>
+                <input type="email" class="form-control" id="patient_email" name="patient_email" required placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="patient_phone">Phone Number</label>
+                <input type="tel" class="form-control" id="patient_phone" name="patient_phone" required placeholder="Enter your phone number">
+            </div>
+            <button type="submit" class="btn btn-primary">{{ translations['book_appointment'] }}</button>
+        </form>
+        <a href="{{ url_for('patient_dashboard', language=request.args.get('language', 'en')) }}" class="btn btn-secondary mt-3">{{ translations['back'] }}</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

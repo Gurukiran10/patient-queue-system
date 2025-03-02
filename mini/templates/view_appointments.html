@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Appointments</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .navbar {
+            background-color: #4CAF50;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #dff0d8;
+        }
+
+        .container-fluid {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px;
+        }
+
+        .col-md-3,
+        .col-md-9 {
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+
+        .col-md-3 {
+            flex: 0 0 25%;
+            max-width: 25%;
+        }
+
+        .col-md-9 {
+            flex: 0 0 75%;
+            max-width: 75%;
+        }
+
+        .list-group {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .list-group-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid #ddd;
+            color: #333;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .list-group-item:hover,
+        .list-group-item.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .list-group-item:last-child {
+            border-bottom: none;
+        }
+
+        h3 {
+            margin-bottom: 20px;
+            color: #4CAF50;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            color: #333;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        td {
+            background-color: white;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .btn-secondary {
+            background-color: #777;
+        }
+
+        .btn-secondary:hover {
+            background-color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .col-md-3,
+            .col-md-9 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .navbar a {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+
+            table, th, td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <span>Patient Dashboard</span>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="list-group">
+                    <a href="{{ url_for('patient_dashboard') }}" class="list-group-item">Dashboard</a>
+                    <a href="{{ url_for('book_appointment') }}" class="list-group-item">Book Appointment</a>
+                    <a href="{{ url_for('view_appointments') }}" class="list-group-item active">View Appointments</a>
+                    <a href="#" class="list-group-item">Profile</a>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <h3>Your Appointments</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Doctor Username</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Room Number</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for appointment in appointments %}
+                            <tr>
+                                <td>{{ appointment.doctor_username }}</td>
+                                <td>{{ appointment.appointment_date }}</td>
+                                <td>{{ appointment.appointment_time }}</td>
+                                <td>{{ appointment.room_number }}</td>
+                                <td>{{ appointment.status }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center">No appointments found</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <!-- Back Button -->
+                <button class="btn btn-secondary" onclick="goBack()">Back</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

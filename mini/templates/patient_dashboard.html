@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #add8e6; /* Light theme background */
+            color: #000; /* Light theme text color */
+            transition: background-color 0.3s, color 0.3s;
+        }
+        body.dark {
+            background-color: #121212; /* Dark theme background */
+            color: #fff; /* Dark theme text color */
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(51, 51, 51, 0.8);
+            color: #fff;
+            padding: 1em;
+        }
+        .navbar .theme-toggle {
+            background-color: #fff;
+            color: #000;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        body.dark .navbar .theme-toggle {
+            background-color: #333;
+            color: #fff;
+        }
+        .container {
+            padding: 20px;
+            text-align: center;
+        }
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.8); /* Light theme card background */
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+            margin-bottom: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        body.dark .card {
+            background-color: rgba(48, 48, 48, 0.9); /* Dark theme card background */
+            color: #fff;
+        }
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px 8px 0 0;
+        }
+        .card h5 {
+            margin: 15px 0 10px;
+        }
+        .card p {
+            color: #666;
+        }
+        body.dark .card p {
+            color: #ccc;
+        }
+        .card a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: rgba(0, 123, 255, 0.8);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .card a:hover {
+            background-color: rgba(0, 86, 179, 0.8);
+        }
+        body.dark .card a {
+            background-color: rgba(0, 150, 136, 0.9);
+        }
+        body.dark .card a:hover {
+            background-color: rgba(0, 121, 107, 0.9);
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <span>Patient Dashboard</span>
+        <div>
+            <button class="theme-toggle" onclick="toggleTheme()">Switch to Dark Theme</button>
+        </div>
+    </div>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('logout', lang=language) }}">{{ translations['logout'] }}</a>
+    </li>
+
+    <div class="container">
+        <h3>Welcome,</h3>
+        <p>Overview of your appointments and actions.</p>
+
+        <!-- Card Buttons Section -->
+        <div class="card-container">
+            
+            <div class="card">
+                <img src="/static/book_appointment.jpg" alt="Book Appointment">
+                <h5>Book Appointment</h5>
+                <a href="/book_appointment?lang=en">Go</a>
+            </div>
+            <div class="card">
+                <img src="/static/patient_profile.jpg" alt="Profile">
+                <h5>Profile</h5>
+                <a href="/patient/profile?lang=en">Go</a>
+            </div>
+
+            <div class="card">
+                <img src="/static/emergency_sos.png" alt="Emergency SOS">
+                <h5>Emergency SOS</h5>
+                <p>Send an alert to nearby hospitals or donors in case of an emergency.</p>
+                <a href="/emergency_sos?lang=en" style="background-color: red; color: white;">Activate</a>
+            </div>
+            <!-- Notification Card -->
+            <div class="card">
+                <img src="/static/notifications.png" alt="view_all_notification">
+                <h5>Notification</h5>
+                <p>Find nearby blood drives, track donations, and schedule future donations.</p>
+                <a href="/view_all_notification?lang=en">Go</a>
+            </div>
+
+            <div class="card">
+                <img src="/static/blood.png" alt="Blood Donation">
+                <h5>Blood Donation Management</h5>
+                <p>Find nearby blood drives, track donations, and schedule future donations.</p>
+                <a href="/blood_donation?lang=en">Go</a>
+            </div>
+            <div class="card">
+                <img src="/static/payment.png" alt="Payment">
+                <h5>Payment</h5>
+                <p>Manage your payments, check payment history, and make secure transactions.</p>
+                <a href="/payment?lang=en">Go</a>
+            </div>
+            <div class="card">
+                <img src="/static/maps.png" alt="Find Nearby Hospitals">
+                <h5>Find Nearby Hospitals</h5>
+                <p>Locate hospitals near you.</p>
+                <a href="/maps?lang=en">Go</a>
+            </div>
+
+            <div class="card">
+                <img src="/static/submit_feedback.jpg" alt="Submit Feedback">
+                <h5>Submit Feedback</h5>
+                <p>Provide feedback on your experience.</p>
+                <a href="/submit_feedback?lang=en">Go</a>
+            </div>
+
+            <div class="card">
+                <img src="/static/logout.jpeg" alt="Logout">
+                <h5>Logout</h5>
+                <p>Sign out of your account.</p>
+                <a href="/logout?lang=en" class="logout-button">Logout</a>
+            </div>
+
+           
+
+            
+
+            
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggleButton = document.querySelector('.theme-toggle');
+
+            body.classList.toggle('dark');
+
+            // Update button text based on the current theme
+            if (body.classList.contains('dark')) {
+                themeToggleButton.textContent = 'Switch to Light Theme';
+            } else {
+                themeToggleButton.textContent = 'Switch to Dark Theme';
+            }
+        }
+    </script>
+</body>
+</html>

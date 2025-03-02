@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ translations['admin_dashboard'] }}</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        nav {
+            background-color: #343a40;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 20px;
+        }
+
+        .container {
+            margin: 20px;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .card h4 {
+            margin: 15px 0;
+            color: #007bff;
+            font-size: 1.2em;
+        }
+
+        .card a {
+            display: block;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .card a:hover {
+            background-color: #0056b3;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .card {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#">{{ translations['admin_dashboard'] }}</a>
+        <a href="{{ url_for('logout', language=request.args.get('language', 'en')) }}">{{ translations['logout'] }}</a>
+    </nav>
+
+    <div class="container">
+        <h3>{{ translations['admin_dashboard'] }}</h3>
+        <div class="card-container">
+            <div class="card">
+                <img src="/static/admin.png" alt="Manage Users">
+                <h4>{{ translations['manage_users'] }}</h4>
+                <a href="{{ url_for('manage_users', language=request.args.get('language', 'en')) }}">{{ translations['manage_users'] }}</a>
+            </div>
+            <div class="card">
+                <img src="/static/feedback.png" alt="View Feedback">
+                <h4>{{ translations['view_feedback'] }}</h4>
+                <a href="{{ url_for('view_feedback', language=request.args.get('language', 'en')) }}">{{ translations['view_feedback'] }}</a>
+            </div>
+            <!-- Add more cards as needed -->
+        </div>
+    </div>
+</body>
+</html>

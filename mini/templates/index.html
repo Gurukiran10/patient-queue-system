@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="{{ translations.lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ translations.dashboard_title }}</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 600px;
+            margin: 100px auto;
+            animation: fadeIn 1s ease;
+        }
+
+        .box {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .language-select-box {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 1.2em;
+            color: #333;
+            display: block;
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+
+        select {
+            font-size: 1em;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s ease;
+        }
+
+        .btn {
+            display: block;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            text-align: center;
+            color: #fff;
+            text-decoration: none;
+            background-color: #007bff;
+            font-size: 1em;
+            margin: 10px 0;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        /* Animation for the container */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Animation for label */
+        label:hover {
+            color: #007bff;
+            cursor: pointer;
+        }
+
+        /* Media Query for responsiveness */
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+
+            .btn {
+                padding: 8px 16px;
+                font-size: 0.9em;
+            }
+
+            select {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+            <form method="post" action="{{ url_for('index') }}" id="language-form">
+                <div class="language-select-box">
+                    <label for="language">{{ translations.select_language }}</label>
+                    <select id="language" name="language" onchange="document.getElementById('language-form').submit();">
+                        <option value="en" {% if language == 'en' %}selected{% endif %}>English</option>
+                        <option value="kn" {% if language == 'kn' %}selected{% endif %}>Kannada</option>
+                    </select>
+                </div>
+            </form>
+            <a href="{{ url_for('login', language=language) }}" class="btn">{{ translations.login }}</a>
+            <a href="{{ url_for('register', language=language) }}" class="btn btn-secondary">{{ translations.register }}</a>
+        </div>
+    </div>
+</body>
+</html>

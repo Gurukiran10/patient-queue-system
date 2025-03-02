@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .form-container input, .form-container select {
+            margin: 10px 0;
+            display: block;
+            padding: 10px;
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+        .form-container button {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+        .history-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .history-container table th, .history-container table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .history-container table th {
+            background-color: #f4f4f4;
+        }
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 20px 0;
+            max-width: 400px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .card-title {
+            font-size: 1.2em;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h3>Enter Transaction Details</h3>
+        <form id="paymentForm" method="POST" action="/payment">
+            <input type="text" name="patient_name" placeholder="Enter Patient Name" required>
+            <input type="email" name="patientEmail" placeholder="Enter Patient Email" required>
+            <input type="text" name="utrNumber" placeholder="Enter UTR Number" required>
+            <input type="number" name="paidAmount" placeholder="Enter Paid Amount" required>
+
+            <!-- Dropdown for doctors -->
+            <label for="doctorName">Select Doctor</label>
+            <select name="doctorName" id="doctorName" required>
+                <option value="" disabled selected>Select Doctor</option>
+                {% for doctor in doctors %}
+                <option value="{{ doctor['username'] }}">
+                    {{ doctor['name'] }} - {{ doctor['branch'] }} ({{ doctor['available_time'] }})
+                </option>
+                {% endfor %}
+            </select>
+
+            <input type="date" name="paymentDate" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <img src="/static/phonepe.jpg" alt="QR Code">
+        <div class="card-title">Scan here to pay</div>
+    </div>
+
+    <div class="history-container">
+        <h3>Transaction History</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Patient Name</th>
+                    <th>Patient Email</th>
+                    <th>Doctor Name</th>
+                    <th>UTR Number</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaction in transactions %}
+                <tr>
+                    <td>{{ transaction.patient_name }}</td>
+                    <td>{{ transaction.patient_email }}</td>
+                    <td>{{ transaction.doctor_name }}</td>
+                    <td>{{ transaction.utr_number }}</td>
+                    <td>{{ transaction.paid_amount }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

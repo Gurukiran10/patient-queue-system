@@ -1,0 +1,35 @@
+<!-- view_user.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View User</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>User Details</h1>
+        <div class="card">
+            <div class="card-body">
+                <p><strong>Username:</strong> {{ user['username'] }}</p>
+                <p><strong>Role:</strong> {{ user['role'] }}</p>
+                <p><strong>Name:</strong> {{ user.get('name', 'N/A') }}</p>
+                <p><strong>Age:</strong> {{ user.get('age', 'N/A') }}</p>
+                <p><strong>Gender:</strong> {{ user.get('gender', 'N/A') }}</p>
+                <p><strong>Blood Group:</strong> {{ user.get('blood_group', 'N/A') }}</p>
+                <p><strong>Medical History:</strong> {{ user.get('medical_history', 'N/A') }}</p>
+                <p><strong>Phone Number:</strong> {{ user.get('phone_number', 'N/A') }}</p>
+                <p><strong>Qualification:</strong> {{ user.get('qualification', 'N/A') }}</p>
+                <p><strong>Branch:</strong> {{ user.get('branch', 'N/A') }}</p>
+                <p><strong>Available Time:</strong> {{ user.get('available_time', 'N/A') }}</p>
+            </div>
+        </div>
+        <a href="{{ url_for('manage_users') }}" class="btn btn-primary mt-4">Back to Manage Users</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="{{ language }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ translations['manage_appointments'] if 'manage_appointments' in translations else 'Manage Appointments' }}</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('logout', lang=language) }}">{{ translations['logout'] }}</a>
+    </li>
+    </nav>
+    <div class="container mt-4">
+        <h2>{{ translations['manage_appointments'] if 'manage_appointments' in translations else 'Manage Appointments' }}</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>{{ translations['patient_username'] if 'patient_username' in translations else 'Patient Username' }}</th>
+                    <th>{{ translations['patient_email'] if 'patient_email' in translations else 'Patient Email' }}</th>
+                    <th>{{ translations['appointment_date'] if 'appointment_date' in translations else 'Appointment Date' }}</th>
+                    <th>{{ translations['appointment_time'] if 'appointment_time' in translations else 'Appointment Time' }}</th>
+                    <th>{{ translations['room_number'] if 'room_number' in translations else 'Room Number' }}</th>
+                    <th>{{ translations['status'] if 'status' in translations else 'Status' }}</th>
+                    <th>{{ translations['actions'] if 'actions' in translations else 'Actions' }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in appointments %}
+                <tr>
+                    <td>{{ appointment.patient_username }}</td>
+                    <td>{{ appointment.patient_email }}</td>
+                    <td>{{ appointment.appointment_date }}</td>
+                    <td>{{ appointment.appointment_time }}</td>
+                    <td>{{ appointment.room_number }}</td>
+                    <td>
+                        {{ translations[appointment.status|lower] if appointment.status|lower in translations else appointment.status }}
+                    </td>
+                    <td>
+                        {% if appointment.status == "Pending" %}
+                        <a href="{{ url_for('appointment_action', appointment_id=appointment._id, action='accept', lang=language) }}" class="btn btn-success btn-sm">
+                            {{ translations['accept'] if 'accept' in translations else 'Accept' }}
+                        </a>
+                        <a href="{{ url_for('appointment_action', appointment_id=appointment._id, action='reject', lang=language) }}" class="btn btn-danger btn-sm">
+                            {{ translations['reject'] if 'reject' in translations else 'Reject' }}
+                        </a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

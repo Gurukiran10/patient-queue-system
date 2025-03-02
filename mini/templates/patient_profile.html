@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Profile</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .navbar {
+            background-color: #4CAF50; /* Green background for the navbar */
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #dff0d8;
+        }
+
+        .container-fluid {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            margin-bottom: 20px;
+            color: #4CAF50;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #333;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            height: 100px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .btn:active {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <span>Patient Profile</span>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+
+    <div class="container-fluid">
+        <h3>Update Profile</h3>
+        <form action="{{ url_for('patient_profile') }}" method="post">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" value="{{ patient.name }}" pattern="[A-Za-z\s]+" title="Name should only contain alphabets and spaces" required>
+            </div>
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" value="{{ patient.age }}" min="1" step="1" required>
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender" required>
+                    <option value="Male" {% if patient.gender == 'Male' %}selected{% endif %}>Male</option>
+                    <option value="Female" {% if patient.gender == 'Female' %}selected{% endif %}>Female</option>
+                    <option value="Other" {% if patient.gender == 'Other' %}selected{% endif %}>Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="blood_group">Blood Group</label>
+                <select id="blood_group" name="blood_group" required>
+                    <option value="A+" {% if patient.blood_group == 'A+' %}selected{% endif %}>A+</option>
+                    <option value="A-" {% if patient.blood_group == 'A-' %}selected{% endif %}>A-</option>
+                    <option value="B+" {% if patient.blood_group == 'B+' %}selected{% endif %}>B+</option>
+                    <option value="B-" {% if patient.blood_group == 'B-' %}selected{% endif %}>B-</option>
+                    <option value="AB+" {% if patient.blood_group == 'AB+' %}selected{% endif %}>AB+</option>
+                    <option value="AB-" {% if patient.blood_group == 'AB-' %}selected{% endif %}>AB-</option>
+                    <option value="O+" {% if patient.blood_group == 'O+' %}selected{% endif %}>O+</option>
+                    <option value="O-" {% if patient.blood_group == 'O-' %}selected{% endif %}>O-</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="medical_history">Medical History</label>
+                <textarea id="medical_history" name="medical_history">{{ patient.medical_history }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="phone_number">Phone Number</label>
+                <input type="text" id="phone_number" name="phone_number" value="{{ patient.phone_number }}" pattern="\d+" title="Phone number should only contain numbers" required>
+            </div>
+           
+            <button type="submit" class="btn">Save Changes</button>
+        </form>
+    </div>
+</body>
+</html>

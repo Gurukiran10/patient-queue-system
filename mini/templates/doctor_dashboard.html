@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="{{ language }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ translations['doctor_dashboard'] }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #add8e6; /* Light blue background */
+        }
+        .navbar {
+            background-color: rgba(52, 58, 64, 0.8); /* Translucent navbar */
+            color: #fff;
+            padding: 1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar .navbar-brand {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.5em;
+        }
+        .nav-item .nav-link {
+            color: #fff;
+            text-decoration: none;
+            padding: 5px 10px;
+            background-color: rgba(220, 53, 69, 0.8); /* Translucent red button for logout */
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .nav-item .nav-link:hover {
+            background-color: rgba(200, 35, 51, 0.8); /* Slightly darker translucent red on hover */
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h3 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        p.text-muted {
+            color: #6c757d;
+            font-size: 1em;
+            margin-bottom: 30px;
+        }
+        .card-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .card {
+            width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.8); /* Translucent card background */
+            text-align: center;
+        }
+        .card img {
+            width: 100%;
+            height: auto;
+        }
+        .card-body {
+            padding: 15px;
+        }
+        .card-title {
+            font-size: 1.25em;
+            margin-bottom: 15px;
+            color: #007bff;
+        }
+        .card-text {
+            font-size: 1em;
+            margin-bottom: 20px;
+            color: #6c757d;
+        }
+        .btn-primary {
+            background-color: rgba(0, 123, 255, 0.8); /* Translucent button */
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary:hover {
+            background-color: rgba(0, 86, 179, 0.8); /* Slightly darker translucent button on hover */
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a class="navbar-brand" href="#">{{ translations['doctor_dashboard'] }}</a>
+        <div class="nav-item">
+            <a class="nav-link" href="{{ url_for('logout', language=request.args.get('language', 'en')) }}">{{ translations['logout'] }}</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h3 class="text-center">{{ translations['welcome'] }}, Dr. {{ doctor_name }}</h3>
+        <p class="text-center text-muted">{{ translations['dashboard_greeting'] }}</p>
+
+        <div class="card-container">
+            <!-- Card 1: Profile Update -->
+            <div class="card">
+                <img src="/static/profile.jpeg" alt="{{ translations['profile_update'] }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ translations['profile_update'] }}</h5>
+                    <p class="card-text">{{ translations['profile_update_desc'] }}</p>
+                    <a href="{{ url_for('doctor_profile', language=request.args.get('language', 'en')) }}" class="btn-primary">{{ translations['go'] }}</a>
+                </div>
+            </div>
+
+            <!-- Card 2: Manage Appointments -->
+            <div class="card">
+                <img src="/static/AM.png" alt="{{ translations['manage_appointments'] }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ translations['manage_appointments'] }}</h5>
+                    <p class="card-text">{{ translations['manage_appointments_desc'] }}</p>
+                    <a href="{{ url_for('manage_appointments', language=request.args.get('language', 'en')) }}" class="btn-primary">{{ translations['go'] }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<div class="container">
+    <h3 class="text-center">{{ translations['welcome'] }}, Dr. {{ doctor_name }}</h3>
+    <p class="text-center text-muted">{{ translations['dashboard_greeting'] }}</p>
+
+    <!-- Display Transactions -->
+    <h4>{{ translations['transactions'] }}</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>{{ translations['patient_email'] }}</th>
+                <th>{{ translations['utr_number'] }}</th>
+                <th>{{ translations['amount'] }}</th>
+                <th>{{ translations['timestamp'] }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in transactions %}
+            <tr>
+                <td>{{ transaction.email }}</td>
+                <td>{{ transaction.utr_number }}</td>
+                <td>{{ transaction.amount }}</td>
+                <td>{{ transaction.timestamp }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+                       
