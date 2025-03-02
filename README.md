@@ -12,7 +12,7 @@ This project is a **smart patient queue and doctor appointment management system
 
 ## 🛠 Tech Stack
 - **Frontend:** React.js / HTML / CSS
-- **Backend:** Node.js / Express.js
+- **Backend:** Node.js
 - **Database:** MongoDB
 - **Version Control:** Git & GitHub
 
